@@ -3,72 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium IT Dashboard</title>
+    <title>IT Solution Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ef4444; /* Red */
-            --secondary: #f97316; /* Orange */
-            --accent: #facc15; /* Yellow */
-        }
+        :root { --primary: #ef4444; --secondary: #f97316; --accent: #facc15; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            color: #fff; padding: 20px;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px; border-radius: 20px;
-            width: 100%; max-width: 400px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            text-align: center;
-        }
-        h2 { margin-bottom: 25px; color: var(--accent); text-transform: uppercase; }
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #fff; padding: 20px; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; }
+        h2 { margin-bottom: 25px; color: var(--accent); }
         .input-group { text-align: left; margin-bottom: 15px; }
         label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 5px; font-weight: 600; }
         
-        /* Dropdown UI Fix */
-        select {
-            width: 100%; padding: 14px;
-            background-color: var(--primary) !important;
-            color: white !important;
-            border: 2px solid var(--secondary);
-            border-radius: 12px; font-weight: 600; outline: none;
-        }
+        /* Dropdown Red/Orange Theme */
+        select { width: 100%; padding: 14px; background-color: var(--primary) !important; color: white !important; border: 2px solid var(--secondary); border-radius: 12px; font-weight: 600; outline: none; appearance: none; }
         select option { background: var(--secondary); color: white; }
 
-        .upload-area {
-            border: 2px dashed var(--accent);
-            padding: 20px; border-radius: 15px;
-            cursor: pointer; background: rgba(250, 204, 21, 0.05);
-            margin-bottom: 15px;
-        }
+        .upload-area { border: 2px dashed var(--accent); padding: 20px; border-radius: 15px; cursor: pointer; background: rgba(250, 204, 21, 0.05); margin-bottom: 15px; }
         #preview { width: 100%; border-radius: 10px; margin-top: 10px; display: none; border: 2px solid var(--secondary); }
 
-        .btn {
-            width: 100%; padding: 16px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white; border: none; border-radius: 12px;
-            font-size: 16px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
-        }
-        .copy-info { font-size: 11px; color: #4ade80; margin-top: 10px; display: none; }
+        .btn { width: 100%; padding: 16px; background: linear-gradient(to right, var(--primary), var(--secondary)); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
     </style>
 </head>
 <body>
 
-    <div class="glass-card" id="login-section">
-        <h2>IT <span>Login</span></h2>
-        <input type="text" id="username" placeholder="Username" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:none; background:rgba(255,255,255,0.1); color:white;">
-        <input type="password" id="password" placeholder="PIN" style="width:100%; padding:12px; margin-bottom:20px; border-radius:8px; border:none; background:rgba(255,255,255,0.1); color:white;">
-        <button class="btn" onclick="handleLogin()">Login</button>
-    </div>
-
-    <div class="glass-card" id="dashboard-section" style="display:none;">
+    <div class="glass-card" id="dashboard-section">
         <h2>IT <span>Reporter</span></h2>
         
         <div class="input-group">
@@ -81,10 +39,10 @@
         </div>
 
         <div class="input-group">
-            <label>2. Device Evidence (Camera/Upload)</label>
+            <label>2. Capture Photo</label>
             <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                <p id="upload-text" style="font-size: 13px;">📸 TAP TO CAPTURE PHOTO</p>
-                <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none" onchange="handleImage(this)">
+                <p id="upload-text" style="font-size: 13px;">📸 TAP TO OPEN CAMERA</p>
+                <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none" onchange="previewImage(this)">
                 <img id="preview">
             </div>
         </div>
@@ -96,68 +54,45 @@
             </select>
         </div>
 
-        <button class="btn" onclick="sendReport()">SEND REPORT & PHOTO</button>
-        <p class="copy-info" id="copyText">✅ Photo copied! WhatsApp open aanavudane <b>Paste</b> pannunga.</p>
+        <button class="btn" onclick="sendReport()">SEND TO WHATSAPP</button>
+        <p style="font-size: 10px; color: #94a3b8; margin-top:10px;">Note: Direct photo attach panna WhatsApp allow pannaadhu. Paste method use pannunga.</p>
     </div>
 
 <script>
-    const TARGET_NUMBERS = ["917708309021"."919976785978"];
-    let capturedBlob = null;
-
-    function handleLogin() {
-        if(document.getElementById("username").value === "admin" && document.getElementById("password").value === "1234") {
-            document.getElementById("login-section").style.display = "none";
-            document.getElementById("dashboard-section").style.display = "block";
-        } else { alert("Access Denied!"); }
-    }
+    const TARGET_NUMBERS = ["917708309021"]; // Update number
 
     function updateOptions() {
         const main = document.getElementById("mainDevice").value;
         const sub = document.getElementById("subStatus");
         sub.innerHTML = "";
-        let opts = main === "Laptop" ? ["Keyboard Damage", "Screen Crack", "Not Powering On"] : ["No Display", "HDMI Port Issue", "Line in Screen"];
-        opts.forEach(o => {
-            let el = document.createElement("option");
-            el.textContent = o; el.value = o; sub.appendChild(el);
-        });
+        let opts = main === "Laptop" ? ["Broken Screen", "Keyboard Issue", "Not Powering"] : ["No Signal", "Display Lines"];
+        opts.forEach(o => { let el = document.createElement("option"); el.textContent = o; el.value = o; sub.appendChild(el); });
     }
 
-    async function handleImage(input) {
+    function previewImage(input) {
         const file = input.files[0];
         if (file) {
-            capturedBlob = file; // Save for clipboard
             const reader = new FileReader();
             reader.onload = e => { 
                 document.getElementById('preview').src = e.target.result; 
                 document.getElementById('preview').style.display = 'block'; 
-                document.getElementById('upload-text').innerText = "✅ Captured - Ready to Paste";
+                document.getElementById('upload-text').innerText = "✅ PHOTO READY";
             }
             reader.readAsDataURL(file);
         }
     }
 
-    async function sendReport() {
+    function sendReport() {
         const device = document.getElementById("mainDevice").value;
         const status = document.getElementById("subStatus").value;
-        if(!device || !status) { alert("Select Details!"); return; }
+        if(!device || !status) { alert("Details select pannunga!"); return; }
 
-        // Step 1: Try to copy image to clipboard
-        if (capturedBlob) {
-            try {
-                const item = new ClipboardItem({ [capturedBlob.type]: capturedBlob });
-                await navigator.clipboard.write([item]);
-                document.getElementById('copyText').style.display = 'block';
-            } catch (err) {
-                console.log("Clipboard not supported or failed.");
-            }
-        }
+        // WhatsApp-ku send panna pora message
+        const msg = `💠 *IT ALERT REPORT*\n\n💠 *Device:* ${device}\n💠 *Status:* ${status}\n💠 *Evidence:* Photo Captured ✅\n\n------------------\n⚠️ *INSTRUCTION:* WhatsApp open aanavudane, andha photo-vai manually *Gallery* vazhiya attach pannunga. Direct attach support aagala.`;
 
-        // Step 2: Open WhatsApp with text
-        const msg = `💠 *IT ALERT REPORT*\n\n💠 *Device:* ${device}\n💠 *Status:* ${status}\n💠 *Evidence:* Photo Captured ✅\n\n_(Note: Photo paste panna marakathinga)_`;
-
-        TARGET_NUMBERS.forEach((num, i) => {
+        TARGET_NUMBERS.forEach((num) => {
             const url = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
-            setTimeout(() => { window.open(url, '_blank'); }, i * 1500);
+            window.open(url, '_blank');
         });
     }
 </script>
