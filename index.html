@@ -7,193 +7,200 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4f46e5;
-            --secondary: #6366f1;
+            --primary: #6366f1;
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --glass: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
             background: var(--bg-gradient);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #fff;
+            padding: 20px;
         }
 
-        /* Container with Glass effect */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px 40px;
+            padding: 40px;
             border-radius: 24px;
-            width: 450px;
+            width: 100%;
+            max-width: 450px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
-        h2 { font-size: 28px; margin-bottom: 30px; letter-spacing: 1px; font-weight: 600; }
-        h2 span { color: var(--secondary); }
+        h2 { font-size: 24px; margin-bottom: 25px; font-weight: 600; }
+        h2 span { color: var(--primary); }
 
-        .input-group { text-align: left; margin-bottom: 25px; }
-        label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
 
         input, select {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.07);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: 10px;
             color: #fff;
-            font-size: 15px;
-            transition: 0.3s;
-        }
-
-        input:focus, select:focus {
+            font-size: 14px;
             outline: none;
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.12);
         }
 
-        /* Modern Gradient Button */
+        /* Image Upload Box - Modern Look */
+        .upload-area {
+            border: 2px dashed rgba(99, 102, 241, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+        .upload-area:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.08); }
+        #preview { width: 100%; border-radius: 10px; margin-top: 10px; display: none; object-fit: cover; max-height: 200px; }
+        
+        .upload-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+
         .btn {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             background: linear-gradient(to right, #4f46e5, #818cf8);
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+            transition: 0.3s;
         }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.5);
-            filter: brightness(1.1);
-        }
-
-        /* Status & Layout control */
         #dashboard-section { display: none; }
-        
-        .success-overlay {
-            display: none;
-            margin-top: 20px;
-            padding: 10px;
-            background: rgba(34, 197, 94, 0.2);
-            border-radius: 8px;
-            border: 1px solid #22c55e;
-            color: #4ade80;
-            font-size: 14px;
-        }
-
-        select option { background: #1e1b4b; color: #fff; }
+        .success-overlay { display: none; margin-top: 20px; padding: 12px; background: rgba(34, 197, 94, 0.15); color: #4ade80; border-radius: 10px; border: 1px solid #22c55e; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <div class="glass-card" id="login-section">
-        <h2>IT <span>Login</span></h2>
+        <h2>IT <span>Portal</span> Login</h2>
         <div class="input-group">
-            <label>Employee ID</label>
-            <input type="text" id="username" placeholder="Username">
+            <label>Access ID</label>
+            <input type="text" id="username" placeholder="Enter Username">
         </div>
         <div class="input-group">
-            <label>Security Key</label>
-            <input type="password" id="password" placeholder="••••••••">
+            <label>Security Pin</label>
+            <input type="password" id="password" placeholder="••••">
         </div>
-        <button class="btn" onclick="handleLogin()">Access Dashboard</button>
+        <button class="btn" onclick="handleLogin()">Unlock Dashboard</button>
     </div>
 
     <div class="glass-card" id="dashboard-section">
-        <h2><span>Asset</span> Manager</h2>
+        <h2><span>Asset</span> Reporter</h2>
         
         <div class="input-group">
-            <label>Hardware Device</label>
+            <label>1. Select Device</label>
             <select id="mainDevice" onchange="updateOptions()">
-                <option value="">-- Select Item --</option>
+                <option value="">-- Choose Hardware --</option>
                 <option value="Laptop">Laptop</option>
-                <option value="Screen">Screen</option>
+                <option value="Screen">External Screen</option>
             </select>
         </div>
 
         <div class="input-group">
-            <label>Maintenance Status</label>
+            <label>2. Device Evidence (Photo)</label>
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <span class="upload-icon">📸</span>
+                <p id="upload-text" style="font-size: 12px; color: #94a3b8;">Tap to Capture or Upload Image</p>
+                <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none" onchange="previewImage()">
+                <img id="preview" alt="Preview Image">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>3. Issue Category</label>
             <select id="subStatus">
-                <option value="">-- Choose Status --</option>
+                <option value="">-- Waiting for Selection --</option>
             </select>
         </div>
 
-        <button class="btn" onclick="sendDirectMessage()">Execute Notification</button>
-        <div class="success-overlay" id="msgDone">Notification Dispatched Successfully!</div>
+        <button class="btn" onclick="sendDirectMessage()">Submit IT Report</button>
+        <div class="success-overlay" id="msgDone">Report Logged & WhatsApp Notified! ✅</div>
     </div>
 
 <script>
     const ADMIN_USER = "admin";
     const ADMIN_PASS = "1234";
-    const TARGET_NUMBERS = ["917708309021"]; // Change to your numbers
+    const TARGET_NUMBERS = ["91XXXXXXXXXX", "91XXXXXXXXXX"]; // Change to yours
 
     function handleLogin() {
         const u = document.getElementById("username").value;
         const p = document.getElementById("password").value;
-
         if(u === ADMIN_USER && p === ADMIN_PASS) {
             document.getElementById("login-section").style.display = "none";
             document.getElementById("dashboard-section").style.display = "block";
-        } else {
-            alert("Security Breach: Invalid Credentials!");
-        }
+        } else { alert("Access Denied!"); }
     }
 
     function updateOptions() {
         const main = document.getElementById("mainDevice").value;
         const sub = document.getElementById("subStatus");
         sub.innerHTML = "";
-
+        
         let options = [];
         if (main === "Laptop") {
-            options = ["Laptop Screen Check", "Laptop Functional", "Hardware Failure"];
+            options = ["OS Crash", "Battery Swollen", "Keyboard Damage", "Display Crack"];
         } else if (main === "Screen") {
-            options = ["Screen Active", "Screen Inactive"];
+            options = ["Power No LED", "Horizontal Lines", "Color Distortion", "HDMI Port Loose"];
+        } else {
+            options = ["Please select device first"];
         }
 
         options.forEach(opt => {
             let el = document.createElement("option");
-            el.textContent = opt;
-            el.value = opt;
-            sub.appendChild(el);
+            el.textContent = opt; el.value = opt; sub.appendChild(el);
         });
+    }
+
+    function previewImage() {
+        const file = document.getElementById('fileInput').files[0];
+        const preview = document.getElementById('preview');
+        const text = document.getElementById('upload-text');
+        const icon = document.querySelector('.upload-icon');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                text.style.display = 'none';
+                icon.style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
     }
 
     function sendDirectMessage() {
         const device = document.getElementById("mainDevice").value;
         const status = document.getElementById("subStatus").value;
+        
+        if(!device || !status) { alert("Selection missing!"); return; }
 
-        if(!device || !status) {
-            alert("Selection required!");
-            return;
-        }
-
-        const msg = `[IT-ALERT] ${device} status changed to: ${status}`;
+        const msg = `🚀 *IT ALERT REPORT*\n----------------------\n📍 *Device:* ${device}\n⚠️ *Status:* ${status}\n📸 *Evidence:* Photo captured on dashboard.`;
 
         TARGET_NUMBERS.forEach((num, index) => {
             const url = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
-            setTimeout(() => {
-                window.open(url, '_blank');
-            }, index * 1200); 
+            setTimeout(() => { window.open(url, '_blank'); }, index * 1200); 
         });
 
         document.getElementById("msgDone").style.display = "block";
-        setTimeout(() => {
-            document.getElementById("msgDone").style.display = "none";
-        }, 4000);
     }
 </script>
 
