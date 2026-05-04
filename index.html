@@ -119,7 +119,7 @@
             <div class="upload-area" onclick="document.getElementById('fileInput').click()">
                 <span class="upload-icon">📸</span>
                 <p id="upload-text" style="font-size: 12px; color: #94a3b8;">Tap to Capture or Upload Image</p>
-                <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none" onchange="previewImage()">
+                <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="previewImage()">
                 <img id="preview" alt="Preview Image">
             </div>
         </div>
@@ -138,7 +138,7 @@
 <script>
     const ADMIN_USER = "admin";
     const ADMIN_PASS = "1234";
-    const TARGET_NUMBERS = ["91XXXXXXXXXX", "91XXXXXXXXXX"]; // Change to yours
+    const TARGET_NUMBERS = ["919876543210", "919876543211"]; // Change to yours
 
     function handleLogin() {
         const u = document.getElementById("username").value;
