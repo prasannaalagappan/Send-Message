@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Solution Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 { color: #1e3c72; margin-bottom: 25px; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #444; font-size: 14px; font-weight: 600; }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            background: #fafafa;
+        }
+
+        input:focus, select:focus { border-color: #2a5298; background: #fff; }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn:hover { background: #218838; transform: translateY(-2px); }
+
+        /* Login and Dashboard toggle */
+        #dashboard-section { display: none; }
+        
+        .success-msg { color: #28a745; margin-top: 15px; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="login-section">
+        <h2>Admin Access</h2>
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Admin ID">
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <button class="btn" style="background: #1e3c72;" onclick="handleLogin()">Enter Dashboard</button>
+    </div>
+
+    <div class="container" id="dashboard-section">
+        <h2>Asset Status Update</h2>
+        
+        <div class="input-group">
+            <label>Hardware Category</label>
+            <select id="mainDevice" onchange="updateOptions()">
+                <option value="">-- Select Item --</option>
+                <option value="Laptop">Laptop</option>
+                <option value="Screen">Screen</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Current Status</label>
+            <select id="subStatus">
+                <option value="">-- Select Status --</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="sendDirectMessage()">Apply & Send Alert</button>
+        <p class="success-msg" id="msgDone">Alert Sent Successfully! ✅</p>
+    </div>
+
+<script>
+    // Configuration
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "1234";
+    // Mobile numbers (+91 prefix compulsory)
+    const TARGET_NUMBERS = ["919659336747" && "917708309021"]; 
+
+    function handleLogin() {
+        const u = document.getElementById("username").value;
+        const p = document.getElementById("password").value;
+
+        if(u === ADMIN_USER && p === ADMIN_PASS) {
+            document.getElementById("login-section").style.display = "none";
+            document.getElementById("dashboard-section").style.display = "block";
+        } else {
+            alert("Login Failed! Please check username/password.");
+        }
+    }
+
+    function updateOptions() {
+        const main = document.getElementById("mainDevice").value;
+        const sub = document.getElementById("subStatus");
+        sub.innerHTML = "";
+
+        let options = [];
+        if (main === "Laptop") {
+            options = ["Laptop Screen", "Laptop Working", "Laptop Not Working"];
+        } else if (main === "Screen") {
+            options = ["Screen On", "Screen Off"];
+        }
+
+        options.forEach(opt => {
+            let el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            sub.appendChild(el);
+        });
+    }
+
+    function sendDirectMessage() {
+        const device = document.getElementById("mainDevice").value;
+        const status = document.getElementById("subStatus").value;
+
+        if(!device || !status) {
+            alert("Oru option choose pannunga!");
+            return;
+        }
+
+        const msg = `IT UPDATE: ${device} status is now ${status}. Reported by: Admin Dashboard.`;
+
+        // Opens WhatsApp for each number
+        TARGET_NUMBERS.forEach((num, index) => {
+            const url = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+            
+            // First number-ah udane open pannum, second number-ku chinna delay
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, index * 1000); 
+        });
+
+        document.getElementById("msgDone").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("msgDone").style.display = "none";
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
