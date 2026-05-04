@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
+            --primary: #f97316; /* Orange Primary */
             --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
         }
 
@@ -19,7 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #000;
+            color: #fff;
             padding: 20px;
         }
 
@@ -36,77 +36,84 @@
         }
 
         h2 { font-size: 24px; margin-bottom: 25px; font-weight: 600; }
-        h2 span { color: var(--primary); }
+        h2 span { color: #facc15; } /* Yellow span */
 
         .input-group { text-align: left; margin-bottom: 20px; }
         label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
 
-        input, select {
+        /* Dropdown Colors - Neenga ketta maari Red/Orange/Yellow theme */
+        select {
             width: 100%;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ef4444; /* Red Background */
+            border: 1px solid #f97316; /* Orange Border */
             border-radius: 10px;
-            color: #000;
+            color: #fff;
             font-size: 14px;
             outline: none;
+            font-weight: 600;
+            appearance: none; /* Custom styling support */
         }
 
-        /* Image Upload Box - Modern Look */
+        /* Option items color (Note: browser behavior vary aagum) */
+        select option {
+            background: #f97316; /* Orange options */
+            color: #fff;
+        }
+
+        #subStatus {
+            background: #f59e0b; /* Yellow/Orange for Status */
+        }
+
         .upload-area {
-            border: 2px dashed rgba(99, 102, 241, 0.3);
-            padding: 25px;
+            border: 2px dashed #facc15;
+            padding: 20px;
             border-radius: 15px;
             cursor: pointer;
-            transition: 0.3s;
+            background: rgba(250, 204, 21, 0.05);
             margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            position: relative;
         }
-        .upload-area:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.08); }
-        #preview { width: 100%; border-radius: 10px; margin-top: 10px; display: none; object-fit: cover; max-height: 200px; }
-        
-        .upload-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+
+        #preview { width: 100%; border-radius: 10px; margin-top: 10px; display: none; }
 
         .btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(to right, #4f46e5, #818cf8);
+            background: linear-gradient(to right, #ef4444, #f97316);
             color: white;
             border: none;
             border-radius: 12px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
-            transition: 0.3s;
+            box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.4);
+            margin-bottom: 10px;
         }
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         #dashboard-section { display: none; }
-        .success-overlay { display: none; margin-top: 20px; padding: 12px; background: rgba(34, 197, 94, 0.15); color: #4ade80; border-radius: 10px; border: 1px solid #22c55e; font-size: 14px; }
+        .success-overlay { display: none; margin-top: 20px; padding: 12px; background: rgba(34, 197, 94, 0.2); color: #4ade80; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div class="glass-card" id="login-section">
-        <h2>IT <span>Portal</span> Login</h2>
+        <h2>IT <span>Login</span></h2>
         <div class="input-group">
-            <label>Access ID</label>
-            <input type="text" id="username" placeholder="Enter Username">
+            <label>ID</label>
+            <input type="text" id="username" placeholder="Admin" style="width:100%; padding:12px; border-radius:10px; border:none; background:rgba(255,255,255,0.1); color:white;">
         </div>
         <div class="input-group">
-            <label>Security Pin</label>
-            <input type="password" id="password" placeholder="••••">
+            <label>PIN</label>
+            <input type="password" id="password" placeholder="••••" style="width:100%; padding:12px; border-radius:10px; border:none; background:rgba(255,255,255,0.1); color:white;">
         </div>
-        <button class="btn" onclick="handleLogin()">Unlock Dashboard</button>
+        <button class="btn" onclick="handleLogin()">Login</button>
     </div>
 
     <div class="glass-card" id="dashboard-section">
-        <h2><span>Asset</span> Reporter</h2>
+        <h2>Asset <span>Reporter</span></h2>
         
         <div class="input-group">
-            <label>1. Select Device</label>
+            <label>1. Device</label>
             <select id="mainDevice" onchange="updateOptions()">
                 <option value="">-- Choose Hardware --</option>
                 <option value="Laptop">Laptop</option>
@@ -115,74 +122,53 @@
         </div>
 
         <div class="input-group">
-            <label>2. Device Evidence (Photo)</label>
+            <label>2. Capture Photo</label>
             <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                <span class="upload-icon">📸</span>
-                <p id="upload-text" style="font-size: 12px; color: #94a3b8;">Tap to Capture or Upload Image</p>
-                <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="previewImage()">
-                <img id="preview" alt="Preview Image">
+                <p id="upload-text" style="font-size: 12px;">📸 Tap to OPEN CAMERA</p>
+                <input type="file" id="fileInput" accept="image/*" capture="environment" style="display:none" onchange="previewImage()">
+                <img id="preview">
             </div>
         </div>
 
         <div class="input-group">
-            <label>3. Issue Category</label>
+            <label>3. Issue Status</label>
             <select id="subStatus">
-                <option value="">-- Waiting for Selection --</option>
+                <option value="">-- Waiting --</option>
             </select>
         </div>
 
-        <button class="btn" onclick="sendDirectMessage()">Submit IT Report</button>
-        <div class="success-overlay" id="msgDone">Report Logged & WhatsApp Notified! ✅</div>
+        <button class="btn" onclick="sendDirectMessage()">Send WhatsApp Report</button>
+        <p style="font-size: 10px; color: #94a3b8;">Note: Browser settings-la camera 'Allow' panni irukanum.</p>
+        <div class="success-overlay" id="msgDone">WhatsApp Triggered! ✅</div>
     </div>
 
 <script>
-    const ADMIN_USER = "admin";
-    const ADMIN_PASS = "1234";
-    const TARGET_NUMBERS = ["917708309021"]; // Change to yours
+    const TARGET_NUMBERS = ["917708309021"]; 
 
     function handleLogin() {
-        const u = document.getElementById("username").value;
-        const p = document.getElementById("password").value;
-        if(u === ADMIN_USER && p === ADMIN_PASS) {
+        if(document.getElementById("username").value === "admin" && document.getElementById("password").value === "1234") {
             document.getElementById("login-section").style.display = "none";
             document.getElementById("dashboard-section").style.display = "block";
-        } else { alert("Access Denied!"); }
+        } else { alert("Error!"); }
     }
 
     function updateOptions() {
         const main = document.getElementById("mainDevice").value;
         const sub = document.getElementById("subStatus");
         sub.innerHTML = "";
-        
-        let options = [];
-        if (main === "Laptop") {
-            options = ["OS Crash", "Battery Swollen", "Keyboard Damage", "Display Crack"];
-        } else if (main === "Screen") {
-            options = ["Power No LED", "Horizontal Lines", "Color Distortion", "HDMI Port Loose"];
-        } else {
-            options = ["Please select device first"];
-        }
-
-        options.forEach(opt => {
+        let opts = main === "Laptop" ? ["Broken Screen", "Dead Battery", "Water Damage"] : ["No Signal", "Lines in Display", "HDMI Fail"];
+        opts.forEach(o => {
             let el = document.createElement("option");
-            el.textContent = opt; el.value = opt; sub.appendChild(el);
+            el.textContent = o; el.value = o; sub.appendChild(el);
         });
     }
 
     function previewImage() {
         const file = document.getElementById('fileInput').files[0];
         const preview = document.getElementById('preview');
-        const text = document.getElementById('upload-text');
-        const icon = document.querySelector('.upload-icon');
-        
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-                text.style.display = 'none';
-                icon.style.display = 'none';
-            }
+            reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; }
             reader.readAsDataURL(file);
         }
     }
@@ -190,19 +176,14 @@
     function sendDirectMessage() {
         const device = document.getElementById("mainDevice").value;
         const status = document.getElementById("subStatus").value;
-        
-        if(!device || !status) { alert("Selection missing!"); return; }
+        const msg = `🚀 IT REPORT\nDevice: ${device}\nIssue: ${status}\nPhoto Captured: Yes`;
 
-        const msg = `🚀 *IT ALERT REPORT*\n----------------------\n📍 *Device:* ${device}\n⚠️ *Status:* ${status}\n📸 *Evidence:* Photo captured on dashboard.`;
-
-        TARGET_NUMBERS.forEach((num, index) => {
+        TARGET_NUMBERS.forEach((num, i) => {
             const url = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
-            setTimeout(() => { window.open(url, '_blank'); }, index * 1200); 
+            setTimeout(() => { window.open(url, '_blank'); }, i * 1500);
         });
-
         document.getElementById("msgDone").style.display = "block";
     }
 </script>
-
 </body>
 </html>
